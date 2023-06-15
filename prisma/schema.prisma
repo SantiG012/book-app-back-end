@@ -7,60 +7,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model author {
-  authorid       String        @id(map: "pk_author") @db.VarChar(80)
-  authorname     String        @db.VarChar(50)
-  authorlastname String        @db.VarChar(50)
-  authorstatus   String        @db.VarChar(10)
-  book_author    book_author[]
+model Author {
+  authorId       String        @id(map: "pk_author") @db.VarChar(80)
+  authorName     String        @db.VarChar(50)
+  authorLastName String        @db.VarChar(50)
+  authorStatus   String        @db.VarChar(10)
+  Book_author    Book_author[]
 
-  @@unique([authorname, authorlastname], map: "author_unique_key")
+  @@unique([authorName, authorLastName], map: "author_unique_key")
 }
 
-model book {
-  bookid           String             @id(map: "pk_book") @db.VarChar(80)
-  booktitle        String             @unique(map: "unique_name_books") @db.VarChar(50)
-  coverurl         String?            @db.VarChar(100)
-  bookstatus       String             @db.VarChar(10)
-  book_author      book_author[]
-  collections_book collections_book[]
+model Book {
+  bookId           String             @id(map: "pk_book") @db.VarChar(80)
+  bookTitle        String             @unique(map: "unique_name_books") @db.VarChar(50)
+  coverUrl         String?            @db.VarChar(100)
+  bookStatus       String             @db.VarChar(10)
+  Book_author      Book_author[]
+  Collections_book Collections_book[]
 }
 
-model book_author {
-  bookid           String @db.VarChar(80)
-  authorid         String @db.VarChar(80)
-  bookauthorstatus String @db.VarChar(10)
-  author           author @relation(fields: [authorid], references: [authorid], onDelete: NoAction, onUpdate: NoAction)
-  book             book   @relation(fields: [bookid], references: [bookid], onDelete: NoAction, onUpdate: NoAction)
+model Book_author {
+  bookId           String @db.VarChar(80)
+  authorId         String @db.VarChar(80)
+  bookAuthorStatus String @db.VarChar(10)
+  Author           Author @relation(fields: [authorId], references: [authorId], onDelete: NoAction, onUpdate: NoAction, map: "book_author_authorid_fkey")
+  Book             Book   @relation(fields: [bookId], references: [bookId], onDelete: NoAction, onUpdate: NoAction, map: "book_author_bookid_fkey")
 
-  @@id([bookid, authorid], map: "pk_book_author")
+  @@id([bookId, authorId], map: "pk_book_author")
 }
 
-model collections {
-  collectionid     String             @id(map: "pk_collections") @db.VarChar(80)
-  collectionname   String             @unique(map: "unique_name_collections") @db.VarChar(50)
-  coverurl         String?            @db.VarChar(100)
-  userid           String?            @db.VarChar(15)
-  collectionstatus String             @db.VarChar(10)
-  users            users?             @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
-  collections_book collections_book[]
+model Collections {
+  collectionId     String             @id(map: "pk_collections") @db.VarChar(80)
+  collectionName   String             @unique(map: "unique_name_collections") @db.VarChar(50)
+  coverUrl         String?            @db.VarChar(100)
+  userId           String?            @db.VarChar(15)
+  collectionStatus String             @db.VarChar(10)
+  User             User?              @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "collections_userid_fkey")
+  Collections_book Collections_book[]
 }
 
-model collections_book {
-  bookid                String      @db.VarChar(80)
-  collectionid          String      @db.VarChar(80)
-  collectionsbookstatus String      @db.VarChar(10)
-  book                  book        @relation(fields: [bookid], references: [bookid], onDelete: NoAction, onUpdate: NoAction)
-  collections           collections @relation(fields: [collectionid], references: [collectionid], onDelete: NoAction, onUpdate: NoAction)
+model Collections_book {
+  bookId                String      @db.VarChar(80)
+  collectionId          String      @db.VarChar(80)
+  collectionsBookStatus String      @db.VarChar(10)
+  Book                  Book        @relation(fields: [bookId], references: [bookId], onDelete: NoAction, onUpdate: NoAction, map: "collections_book_bookid_fkey")
+  Collections           Collections @relation(fields: [collectionId], references: [collectionId], onDelete: NoAction, onUpdate: NoAction, map: "collections_book_collectionid_fkey")
 
-  @@id([bookid, collectionid], map: "pk_collections_book")
+  @@id([bookId, collectionId], map: "pk_collections_book")
 }
 
-model users {
-  userid       String        @id(map: "pk_users") @db.VarChar(15)
-  username     String        @db.VarChar(40)
-  userlastname String        @db.VarChar(40)
-  userstatus   String        @db.VarChar(10)
+model User {
+  userId       String        @id(map: "pk_users") @db.VarChar(15)
+  userName     String        @db.VarChar(40)
+  userLastName String        @db.VarChar(40)
+  userStatus   String        @db.VarChar(10)
   password     String        @default("123") @db.VarChar(255)
-  collections  collections[]
+  Collections  Collections[]
 }
