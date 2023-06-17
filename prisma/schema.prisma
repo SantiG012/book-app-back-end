@@ -8,20 +8,20 @@ datasource db {
 }
 
 model Author {
-  authorId       String        @id(map: "pk_author") @db.VarChar(80)
+  authorId       String        @id(map: "pk_author") @default(dbgenerated("gen_random_uuid()")) @db.VarChar(80)
   authorName     String        @db.Citext
   authorLastName String        @db.Citext
-  authorStatus   String        @db.VarChar(10)
+  authorStatus   String        @default("active") @db.VarChar(10)
   book_author    Book_author[]
 
   @@unique([authorName, authorLastName], map: "author_unique_key")
 }
 
 model Book {
-  bookId           String             @id(map: "pk_book") @db.VarChar(80)
+  bookId           String             @id(map: "pk_book") @default(dbgenerated("gen_random_uuid()")) @db.VarChar(80)
   bookTitle        String             @unique(map: "unique_name_books") @db.Citext
   coverUrl         String?            @db.VarChar(100)
-  bookStatus       String             @db.VarChar(10)
+  bookStatus       String             @default("active") @db.VarChar(10)
   book_author      Book_author[]
   collections_book Collections_book[]
 }
@@ -29,7 +29,7 @@ model Book {
 model Book_author {
   bookId           String @db.VarChar(80)
   authorId         String @db.VarChar(80)
-  bookAuthorStatus String @db.VarChar(10)
+  bookAuthorStatus String @default("active") @db.VarChar(10)
   author           Author @relation(fields: [authorId], references: [authorId], onDelete: NoAction, onUpdate: NoAction, map: "book_author_authorid_fkey")
   book             Book   @relation(fields: [bookId], references: [bookId], onDelete: NoAction, onUpdate: NoAction, map: "book_author_bookid_fkey")
 
@@ -37,11 +37,11 @@ model Book_author {
 }
 
 model Collections {
-  collectionId     String             @id(map: "pk_collections") @db.VarChar(80)
+  collectionId     String             @id(map: "pk_collections") @default(dbgenerated("gen_random_uuid()")) @db.VarChar(80)
   collectionName   String             @unique(map: "unique_name_collections") @db.Citext
   coverUrl         String?            @db.VarChar(100)
   userId           String?            @db.VarChar(15)
-  collectionStatus String             @db.VarChar(10)
+  collectionStatus String             @default("active") @db.VarChar(10)
   user             User?              @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "collections_userid_fkey")
   collections_book Collections_book[]
 }
@@ -49,7 +49,7 @@ model Collections {
 model Collections_book {
   bookId                String      @db.VarChar(80)
   collectionId          String      @db.VarChar(80)
-  collectionsBookStatus String      @db.VarChar(10)
+  collectionsBookStatus String      @default("active") @db.VarChar(10)
   book                  Book        @relation(fields: [bookId], references: [bookId], onDelete: NoAction, onUpdate: NoAction, map: "collections_book_bookid_fkey")
   collections           Collections @relation(fields: [collectionId], references: [collectionId], onDelete: NoAction, onUpdate: NoAction, map: "collections_book_collectionid_fkey")
 
@@ -57,10 +57,10 @@ model Collections_book {
 }
 
 model User {
-  userId       String        @id(map: "pk_users") @db.VarChar(15)
+  userId       String        @id(map: "pk_users") @default(dbgenerated("gen_random_uuid()")) @db.VarChar(15)
   userName     String        @db.VarChar(40)
   userLastName String        @db.VarChar(40)
-  userStatus   String        @db.VarChar(10)
-  password     String        @default("123") @db.VarChar(255)
+  userStatus   String        @default("active") @db.VarChar(10)
+  password     String        @db.VarChar(255)
   collections  Collections[]
 }
