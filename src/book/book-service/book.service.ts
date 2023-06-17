@@ -4,7 +4,6 @@ import { AbstractPrismaService } from 'src/prisma/abstract-prisma.service';
 import { BookCreationDto } from '../book-dtos';
 import { v4 as uuidv4 } from "uuid";
 import { Observable, catchError, from, throwError } from 'rxjs';
-import { Book } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 @Injectable()
