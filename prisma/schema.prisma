@@ -9,8 +9,8 @@ datasource db {
 
 model Author {
   authorId       String        @id(map: "pk_author") @db.VarChar(80)
-  authorName     String        @db.VarChar(50)
-  authorLastName String        @db.VarChar(50)
+  authorName     String        @db.Citext
+  authorLastName String        @db.Citext
   authorStatus   String        @db.VarChar(10)
   book_author    Book_author[]
 
@@ -19,7 +19,7 @@ model Author {
 
 model Book {
   bookId           String             @id(map: "pk_book") @db.VarChar(80)
-  bookTitle        String             @unique(map: "unique_name_books") @db.VarChar(50)
+  bookTitle        String             @unique(map: "unique_name_books") @db.Citext
   coverUrl         String?            @db.VarChar(100)
   bookStatus       String             @db.VarChar(10)
   book_author      Book_author[]
@@ -38,7 +38,7 @@ model Book_author {
 
 model Collections {
   collectionId     String             @id(map: "pk_collections") @db.VarChar(80)
-  collectionName   String             @unique(map: "unique_name_collections") @db.VarChar(50)
+  collectionName   String             @unique(map: "unique_name_collections") @db.Citext
   coverUrl         String?            @db.VarChar(100)
   userId           String?            @db.VarChar(15)
   collectionStatus String             @db.VarChar(10)
