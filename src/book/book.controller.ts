@@ -1,6 +1,6 @@
 import { Body, Controller,Post} from '@nestjs/common';
-import { AbstracBookService } from '../abstract-book.service';
-import { BookCreationDto } from '../book-dtos';
+import { AbstracBookService } from './abstract-book.service';
+import { BookCreationDto } from './book-dtos';
 import { Book } from '@prisma/client';
 import { Observable} from 'rxjs';
 
