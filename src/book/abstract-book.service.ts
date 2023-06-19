@@ -1,7 +1,6 @@
-import { Observable } from "rxjs";
-import { BookCreationDto } from "./book-dtos";
+import { BookCreationDto,BookCreationResponseDto } from "./book-dtos";
 import { Book } from "@prisma/client";
 
 export abstract class AbstracBookService{
-    abstract createBook(book: BookCreationDto):Observable<{bookId:string}>;
+    abstract  createBook(book: BookCreationDto):Promise<BookCreationResponseDto>;
 }

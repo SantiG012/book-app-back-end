@@ -1,16 +1,15 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
 import { AbstractPrismaService } from 'src/prisma/abstract-prisma.service';
-import { BookCreationDto } from './book-dtos';
 import { v4 as uuidv4 } from "uuid";
-import { Observable, catchError, from, throwError } from 'rxjs';
+import { BookCreationResponseDto,BookCreationDto } from './book-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 @Injectable()
 export class BookService implements AbstracBookService {
     constructor(private readonly prisma: AbstractPrismaService) {}
     
-    createBook(book:BookCreationDto):Observable<{bookId:string}> {
+    async createBook(book:BookCreationDto):Promise<BookCreationResponseDto> {
         const data = {
             bookId: uuidv4(),
             bookTitle: book.title,
@@ -18,16 +17,20 @@ export class BookService implements AbstracBookService {
             bookStatus:'active'
         };
 
-        return from(this.prisma.book.create({
-            data:data,
-            select:{
-                bookId:true
-            }
-        })).pipe(
-            catchError((error:PrismaClientKnownRequestError)=>{
-                return throwError(()=>this.createError(error.code))
-            })
-        );
+        
+        try {        
+            const bookId:BookCreationResponseDto = await this.prisma.book.create({
+                    data:data,
+                    select:{
+                        bookId:true
+                    }
+                });
+
+            return bookId;
+        }catch (error:PrismaClientKnownRequestError | any) {
+            throw this.createError(error.code || 'UNKNOWN_ERROR');
+        }
+
     }
 
     private createError(erroCode:string):HttpException{
