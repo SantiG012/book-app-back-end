@@ -9,3 +9,7 @@ export class BookCreationDto {
     @IsString()
     coverUrl: string | null;
 }
+
+export interface BookCreationResponseDto {
+    bookId: string;
+}
