@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AbstractPrismaService } from '../abstract-prisma.service';
+import { AbstractPrismaService } from './abstract-prisma.service';
 
 @Injectable()
 export class PrismaService extends AbstractPrismaService {
