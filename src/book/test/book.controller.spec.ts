@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
-import { BookCreationDto } from '../book-dtos/bookCreationDto';
+import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
 
 jest.mock('../book.service');
 
@@ -30,7 +30,7 @@ describe('BookController', () => {
 
   describe('create book', () => {
     describe ('when create book', () => {
-      let bookId:{bookId: string};
+      let bookId:BookCreationResponseDto;
 
       const bookDto:BookCreationDto = {
         title: '1984',
@@ -38,12 +38,7 @@ describe('BookController', () => {
       };
 
       beforeEach(async () => {
-        await new Promise<void>((resolve)=>{
-          bookController.createBook(bookDto).subscribe((emittedBookId:{bookId: string})=>{
-            bookId = emittedBookId;
-            resolve();
-          })
-        })
+        bookId = await bookController.createBook(bookDto);
       });
 
       test('then it should call bookService', () => {
