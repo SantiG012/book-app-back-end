@@ -7,8 +7,8 @@ export class BookController {
     constructor(private readonly bookService: AbstracBookService) {}
 
     @Post('createBook')
-    createBook(@Body() bookDto:BookCreationDto):Promise<BookCreationResponseDto> {
+    async createBook(@Body() bookDto:BookCreationDto):Promise<BookCreationResponseDto> {
         
-        return this.bookService.createBook(bookDto);
+        return await this.bookService.createBook(bookDto);
     }
 }
