@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
-import { AbstractPrismaService } from 'src/prisma/abstract-prisma.service';
+import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { v4 as uuidv4 } from "uuid";
 import { BookCreationResponseDto,BookCreationDto } from './book-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
