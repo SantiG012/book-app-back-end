@@ -3,7 +3,7 @@ import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
-import { bookStub } from './stubs/book.stub';
+import { bookStub } from '../../prisma/test/stubs/book.stub';
 
 jest.mock('../book.service');
 
