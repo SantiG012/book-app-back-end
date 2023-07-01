@@ -6,7 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { BookCreationDto, BookCreationResponseDto } from '../book-dtos';
 import { bookStub } from '../../prisma/test/stubs/book.stub';
 import { HttpException } from '@nestjs/common';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { repeatedBookExceptionStub } from './stubs/repeated-book-exception.stub';
 
 
 jest.mock('../../prisma/prisma.service');
@@ -66,13 +66,7 @@ describe('BookService', () => {
     
       beforeEach(async ()=>{
         prismaService.book.create = jest.fn().mockImplementation(()=>{
-          throw new PrismaClientKnownRequestError('Unique constraint',{
-            code:'P2002',
-            clientVersion:'2.19.0',
-            meta:{
-              target:['bookId']
-            }
-          });
+          repeatedBookExceptionStub();
         })
 
       });
