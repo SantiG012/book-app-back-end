@@ -5,8 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { BookCreationResponseDto } from 'src/book/book-dtos';
 import { Book } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { HttpException } from '@nestjs/common';
-import { bookStub, sucessfulBookCreationStub } from '../../book/test/stubs/index';
+import { bookStub, sucessfulBookCreationStub,repeatedBookExceptionStub } from '../../book/test/stubs/index';
 
 jest.mock('../prisma.service');
 
@@ -62,24 +61,13 @@ describe('PrismaService', () => {
       const book:Book= bookStub();
 
       beforeEach(async()=>{
-        service.book.create = jest.fn().mockRejectedValue({
-          code:'P2002'
+        service.book.create = jest.fn().mockRejectedValue(()=>{
+          repeatedBookExceptionStub();
         });
-
-        try{
-          bookId = await service.book.create({
-            data:book
-          });
-        }catch(e:PrismaClientKnownRequestError | any){
-
-        }
-
       });
 
-      test('then it should throw an error',()=>{
-        expect(()=>{
-          throw new HttpException('Book already exists', 409);
-        }).toThrow();
+      test('then it should throw an error',async()=>{
+        await expect(service.book.create({data:book})).rejects.toThrow(PrismaClientKnownRequestError);
       });
     });
   });
