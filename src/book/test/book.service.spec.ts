@@ -53,10 +53,7 @@ describe('BookService', () => {
 
   describe('create an existing book',()=>{
     describe('when create an existing book',()=>{
-      const bookDto:BookCreationDto =  {
-        title:'1984',
-        coverUrl:''
-      }
+      const bookCreationDto:BookCreationDto = bookCreationDtoStub();
 
     
       beforeEach(async ()=>{
@@ -68,7 +65,7 @@ describe('BookService', () => {
 
 
       test('then it should throw an error', async () => {
-        await expect(service.createBook(bookDto)).rejects.toThrow(HttpException);
+        await expect(service.createBook(bookCreationDto)).rejects.toThrow(HttpException);
       });
     });
 
