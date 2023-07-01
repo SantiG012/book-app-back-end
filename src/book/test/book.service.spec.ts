@@ -5,6 +5,8 @@ import { AbstractPrismaService } from '../../prisma/abstract-prisma.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { BookCreationDto, BookCreationResponseDto } from '../book-dtos';
 import { bookStub } from '../../prisma/test/stubs/book.stub';
+import { HttpException } from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 
 jest.mock('../../prisma/prisma.service');
@@ -12,6 +14,7 @@ jest.mock('../../prisma/prisma.service');
 
 describe('BookService', () => {
   let service: AbstracBookService;
+  let prismaService: AbstractPrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,6 +29,7 @@ describe('BookService', () => {
     }).compile();
 
     service = module.get<AbstracBookService>(AbstracBookService);
+    prismaService = module.get<AbstractPrismaService>(AbstractPrismaService);
   });
 
   it('should be defined', () => {
@@ -51,4 +55,33 @@ describe('BookService', () => {
 
     })
   })
+
+  describe('create an existing book',()=>{
+    describe('when create an existing book',()=>{
+      const bookDto:BookCreationDto =  {
+        title:'1984',
+        coverUrl:''
+      }
+
+    
+      beforeEach(async ()=>{
+        prismaService.book.create = jest.fn().mockImplementation(()=>{
+          throw new PrismaClientKnownRequestError('Unique constraint',{
+            code:'P2002',
+            clientVersion:'2.19.0',
+            meta:{
+              target:['bookId']
+            }
+          });
+        })
+
+      });
+
+
+      test('then it should throw an error', async () => {
+        await expect(service.createBook(bookDto)).rejects.toThrow(HttpException);
+      });
+    });
+
+  });
 });
