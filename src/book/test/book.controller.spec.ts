@@ -3,7 +3,7 @@ import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
-import { bookCreationDtoStub, bookStub } from './stubs/index';
+import { bookCreationDtoStub, bookStub, sucessfulBookCreationStub } from './stubs/index';
 
 jest.mock('../book.service');
 
@@ -44,7 +44,7 @@ describe('BookController', () => {
       });
 
       test('then it should return a bookId', () => {
-        expect(bookId).toEqual(bookStub());
+        expect(bookId).toEqual(sucessfulBookCreationStub());
       });
 
     });

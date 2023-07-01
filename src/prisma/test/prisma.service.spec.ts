@@ -6,7 +6,7 @@ import { BookCreationResponseDto } from 'src/book/book-dtos';
 import { Book } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { HttpException } from '@nestjs/common';
-import { bookStub } from 'src/book/test/stubs/book.stubs';
+import { bookStub, sucessfulBookCreationStub } from '../../book/test/stubs/index';
 
 jest.mock('../prisma.service');
 
@@ -50,7 +50,7 @@ describe('PrismaService', () => {
       });
 
       test('then it should return a bookId',()=>{
-        expect(bookId).toEqual({bookId:book.bookId});
+        expect(bookId).toEqual(sucessfulBookCreationStub());
       });
     });
   });

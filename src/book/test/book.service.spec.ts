@@ -4,7 +4,7 @@ import { AbstracBookService } from '../abstract-book.service';
 import { AbstractPrismaService } from '../../prisma/abstract-prisma.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { BookCreationDto, BookCreationResponseDto} from '../book-dtos';
-import { bookStub, bookCreationDtoStub,repeatedBookExceptionStub } from './stubs/index';
+import { bookStub, bookCreationDtoStub,repeatedBookExceptionStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
 
 jest.mock('../../prisma/prisma.service');
@@ -45,7 +45,7 @@ describe('BookService', () => {
       })
 
       test('then it should return a bookId', () => {
-        expect(bookId).toEqual(bookStub());
+        expect(bookId).toEqual(sucessfulBookCreationStub());
       });
 
     })
