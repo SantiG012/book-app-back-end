@@ -1,7 +1,7 @@
-import { bookStub } from "../../prisma/test/stubs/book.stub";
+import { sucessfulBookCreationStub } from "../test/stubs/index";
 
 export const BookService = jest.fn().mockReturnValue({
     
-    createBook: jest.fn().mockResolvedValue(bookStub())
+    createBook: jest.fn().mockResolvedValue(sucessfulBookCreationStub())
     
 });
