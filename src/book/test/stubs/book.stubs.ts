@@ -1,5 +1,6 @@
-import { BookCreationResponseDto } from "src/book/book-dtos";
+import { BookCreationDto, BookCreationResponseDto } from "src/book/book-dtos";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { Book } from '@prisma/client';
 
 export const sucessfulBookCreationStub = ():BookCreationResponseDto => {
     const bookId:BookCreationResponseDto = {
@@ -17,4 +18,26 @@ export const repeatedBookExceptionStub = () => {
           target:['bookId']
         }
     });
+}
+
+export const bookCreationDtoStub = ():BookCreationDto => {
+    const bookCreationDto:BookCreationDto = {
+        title:'1984',
+        coverUrl:''
+    }
+
+    return bookCreationDto;
+}
+
+
+
+export const bookStub = ():Book => {
+    const book:Book= {
+        bookId:'bookId',
+        bookTitle:'1984',
+        coverUrl:null,
+        bookStatus:'active'
+    }
+
+    return book;
 }
