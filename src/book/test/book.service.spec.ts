@@ -3,11 +3,9 @@ import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { AbstractPrismaService } from '../../prisma/abstract-prisma.service';
 import { PrismaService } from '../../prisma/prisma.service';
-import { BookCreationDto, BookCreationResponseDto } from '../book-dtos';
-import { bookStub } from '../../prisma/test/stubs/book.stub';
+import { BookCreationDto, BookCreationResponseDto} from '../book-dtos';
+import { bookStub, bookCreationDtoStub,repeatedBookExceptionStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
-import { repeatedBookExceptionStub } from './stubs/repeated-book-exception.stub';
-
 
 jest.mock('../../prisma/prisma.service');
 
@@ -40,13 +38,10 @@ describe('BookService', () => {
     describe('when create a book',()=>{
       let bookId:BookCreationResponseDto;
 
-      const bookDto:BookCreationDto =  {
-        title:'1984',
-        coverUrl:''
-      }
+      const bookCreationDto:BookCreationDto = bookCreationDtoStub();
 
       beforeEach(async ()=>{
-        bookId = await service.createBook(bookDto);
+        bookId = await service.createBook(bookCreationDto);
       })
 
       test('then it should return a bookId', () => {

@@ -1,4 +1,4 @@
-import { bookStub } from "../test/stubs/book.stub";
+import { bookStub } from "../../book/test/stubs/index";
 
 export const PrismaService = jest.fn().mockReturnValue({
     book: {
