@@ -3,7 +3,7 @@ import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
-import { bookStub } from '../../prisma/test/stubs/book.stub';
+import { bookCreationDtoStub, bookStub } from './stubs/index';
 
 jest.mock('../book.service');
 
@@ -33,10 +33,7 @@ describe('BookController', () => {
     describe ('when create book', () => {
       let bookId:BookCreationResponseDto;
 
-      const bookDto:BookCreationDto = {
-        title: '1984',
-        coverUrl: '',
-      };
+      const bookDto:BookCreationDto = bookCreationDtoStub();
 
       beforeEach(async () => {
         bookId = await bookController.createBook(bookDto);
