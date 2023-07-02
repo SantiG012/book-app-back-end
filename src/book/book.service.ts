@@ -4,18 +4,14 @@ import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { v4 as uuidv4 } from "uuid";
 import { BookCreationResponseDto,BookCreationDto } from './book-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
 @Injectable()
 export class BookService implements AbstracBookService {
     constructor(private readonly prisma: AbstractPrismaService) {}
     
     async createBook(book:BookCreationDto):Promise<BookCreationResponseDto> {
-        const data = {
-            bookId: uuidv4(),
-            bookTitle: book.title,
-            coverUrl: book.coverUrl,
-            bookStatus:'active'
-        };
+        const data = this.createBookObject(book);
 
         
         try {        
@@ -28,15 +24,17 @@ export class BookService implements AbstracBookService {
 
             return bookId;
         }catch (error:PrismaClientKnownRequestError | any) {
-            throw this.createError(error.code || 'UNKNOWN_ERROR');
+            throw createError(error.code || 'UNKNOWN_ERROR','Book');
         }
 
     }
 
-    private createError(erroCode:string):HttpException{
-        if (erroCode === 'P2002') {
-            return new HttpException('Book already exists', 409);
-        }
-        return new HttpException('Internal server error', 500)
+    private createBookObject(book:BookCreationDto) {
+        return {
+            bookId: uuidv4(),
+            bookTitle: book.title,
+            coverUrl: book.coverUrl,
+            bookStatus:'active'
+        };
     }
 }
