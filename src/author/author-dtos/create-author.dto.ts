@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString} from "class-validator";
-import { IsStringWithoutNumbers } from "src/custom-validators/string-without-nambers.validator";
+import { IsStringWithoutNumbers } from "src/custom-validators/index";
 
 
 export class CreateAuthorDto {
