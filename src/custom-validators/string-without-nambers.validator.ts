@@ -16,7 +16,8 @@ import {
     }
 
     defaultMessage(validationArguments?: ValidationArguments): string {
-        return 'The string should not contain numbers';
+        const property = validationArguments.property;
+        return `${property}'s value must not contain numbers`;
     }
   }
   
