@@ -4,7 +4,7 @@ import { AbstractPrismaService } from '../abstract-prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { BookCreationResponseDto } from 'src/book/book-dtos';
 import { Book } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { bookStub, sucessfulBookCreationStub,repeatedBookExceptionStub } from '../../book/test/stubs/index';
 
 jest.mock('../prisma.service');
