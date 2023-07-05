@@ -4,8 +4,9 @@ import { AbstracBookService } from '../abstract-book.service';
 import { AbstractPrismaService } from '../../prisma/abstract-prisma.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { BookCreationDto, BookCreationResponseDto} from '../book-dtos';
-import { bookStub, bookCreationDtoStub,repeatedBookExceptionStub, sucessfulBookCreationStub } from './stubs/index';
+import { bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
+import { repeatedResourceExceptionStub } from '../../data-base-common-exceptions/repeated-exceptions';
 
 jest.mock('../../prisma/prisma.service');
 
@@ -58,7 +59,7 @@ describe('BookService', () => {
     
       beforeEach(async ()=>{
         prismaService.book.create = jest.fn().mockImplementation(()=>{
-          repeatedBookExceptionStub();
+          repeatedResourceExceptionStub();
         })
 
       });
