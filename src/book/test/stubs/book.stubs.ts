@@ -1,5 +1,5 @@
 import { BookCreationDto, BookCreationResponseDto } from "src/book/book-dtos";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Book } from '@prisma/client';
 
 export const sucessfulBookCreationStub = ():BookCreationResponseDto => {

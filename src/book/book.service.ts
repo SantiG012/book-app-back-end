@@ -3,7 +3,7 @@ import { AbstracBookService } from './abstract-book.service';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { v4 as uuidv4 } from "uuid";
 import { BookCreationResponseDto,BookCreationDto } from './book-dtos';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
 @Injectable()

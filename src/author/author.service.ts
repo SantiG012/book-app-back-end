@@ -3,7 +3,7 @@ import { AbstractAuthorService } from './abstract-author.service';
 import { CreateAuthorDto, AuthorIdDto } from './author-dtos';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { v4 as uuidv4 } from "uuid";
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
 @Injectable()
