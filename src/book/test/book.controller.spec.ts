@@ -4,6 +4,8 @@ import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
 import { bookCreationDtoStub, bookStub, sucessfulBookCreationStub } from './stubs/index';
+import { HttpException } from '@nestjs/common';
+import { badRequestException } from '../../data-base-common-exceptions/repeated-http-exceptions';
 
 jest.mock('../book.service');
 
@@ -49,5 +51,29 @@ describe('BookController', () => {
 
     });
   });
+
+  describe('create an existing book',()=>{
+    describe('when create an existing book',()=>{
+      try{
+
+      }catch(error:HttpException | any){
+
+        beforeEach(async ()=>{
+          bookService.createBook = jest.fn().mockResolvedValue(()=>{
+            throw badRequestException('Book');
+          })
+        });
+
+        test('then it should throw an error',()=>{
+          const message = 'Book already exists';
+          const status = 400;
+          
+          expect(error.message).toBe(message);
+          expect(error.status).toBe(status);
+          expect(error).toBeInstanceOf(HttpException);
+        });
+      }
+    });
+  })
 
 });
