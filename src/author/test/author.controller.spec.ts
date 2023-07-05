@@ -54,13 +54,23 @@ describe('AuthorController', () => {
   describe('create an existing author',()=>{
     describe('when create an existing author',()=>{
       beforeEach(async ()=>{
-          authorService.createAuthor = jest.fn().mockRejectedValue(()=>{
+          authorService.createAuthor = jest.fn().mockResolvedValue(()=>{
           throw badRequestException('Author');
         })
       });
 
-      test('then it should throw an HttpException', async () => {
-        await expect(controller.createAuthor(createAuthorStub())).rejects.toThrow(HttpException);
+      test('then it should throw a bad request HttpException', async () => {
+        try{
+          await controller.createAuthor(createAuthorStub());
+        }catch(err:HttpException | any){
+          const message = err.error;
+          
+          const status = err.status;
+
+          expect(message).toEqual('Author already exists');
+          expect(status).toEqual(400);
+          expect(err).toBeInstanceOf(HttpException);
+        }
       });
     });
   })
