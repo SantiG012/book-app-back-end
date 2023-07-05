@@ -4,6 +4,8 @@ import { AbstractAuthorService } from '../abstract-author.service';
 import { AuthorService } from '../author.service';
 import { AuthorIdDto, CreateAuthorDto } from '../author-dtos';
 import { createAuthorStub, sucessfulAuthorCreationStub } from './author.stubs';
+import { HttpException } from '@nestjs/common';
+import { badRequestException } from '../../data-base-common-exceptions/repeated-http-exceptions';
 
 jest.mock('../author.service');
 
@@ -48,4 +50,18 @@ describe('AuthorController', () => {
 
     });
   });
+
+  describe('create an existing author',()=>{
+    describe('when create an existing author',()=>{
+      beforeEach(async ()=>{
+          authorService.createAuthor = jest.fn().mockRejectedValue(()=>{
+          throw badRequestException('Author');
+        })
+      });
+
+      test('then it should throw an HttpException', async () => {
+        await expect(controller.createAuthor(createAuthorStub())).rejects.toThrow(HttpException);
+      });
+    });
+  })
 });
