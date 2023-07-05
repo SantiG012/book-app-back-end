@@ -53,26 +53,28 @@ describe('BookController', () => {
   });
 
   describe('create an existing book',()=>{
-    describe('when create an existing book',()=>{
-      try{
+    describe('when create an existing book', ()=>{
 
-      }catch(error:HttpException | any){
+      beforeEach(async ()=>{
+        bookService.createBook = jest.fn().mockResolvedValue(()=>{
+          throw badRequestException('Book');
+        })
+      });
 
-        beforeEach(async ()=>{
-          bookService.createBook = jest.fn().mockResolvedValue(()=>{
-            throw badRequestException('Book');
-          })
-        });
-
-        test('then it should throw an error',()=>{
+      test('then it should throw an error',async()=>{
+        try{
+          await bookController.createBook(bookCreationDtoStub());
+        } catch(error:HttpException | any){
           const message = 'Book already exists';
           const status = 400;
           
           expect(error.message).toBe(message);
           expect(error.status).toBe(status);
           expect(error).toBeInstanceOf(HttpException);
-        });
-      }
+
+        }
+      });
+
     });
   })
 
