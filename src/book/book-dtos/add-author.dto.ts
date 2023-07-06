@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class AddAuthorDto {
+export class AddAuthorsDto {
     @IsNotEmpty()
     @IsString()
     bookId: string;
 
     @IsNotEmpty()
     @IsString()
-    authorId: string;
+    authors: string[];
 }
