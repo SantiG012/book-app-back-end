@@ -1,9 +1,9 @@
-import { CreateBookDto, BookCreationResponseDto } from "src/book/book-dtos";
+import { CreateBookDto, BookIdDto } from "src/book/book-dtos";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Book } from '@prisma/client';
 
-export const sucessfulBookCreationStub = ():BookCreationResponseDto => {
-    const bookId:BookCreationResponseDto = {
+export const sucessfulBookCreationStub = ():BookIdDto => {
+    const bookId:BookIdDto = {
         bookId:'bookId'
     }
 

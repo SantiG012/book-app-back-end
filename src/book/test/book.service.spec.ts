@@ -3,7 +3,7 @@ import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
 import { AbstractPrismaService } from '../../prisma/abstract-prisma.service';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateBookDto, BookCreationResponseDto} from '../book-dtos';
+import { CreateBookDto, BookIdDto} from '../book-dtos';
 import { bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
 import { repeatedResourceExceptionStub } from '../../data-base-common-exceptions/repeated-exceptions';
@@ -37,7 +37,7 @@ describe('BookService', () => {
 
   describe('create a book',()=>{
     describe('when create a book',()=>{
-      let bookId:BookCreationResponseDto;
+      let bookId:BookIdDto;
 
       const bookCreationDto:CreateBookDto = bookCreationDtoStub();
 

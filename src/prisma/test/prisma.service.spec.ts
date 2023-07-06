@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma.service';
 import { AbstractPrismaService } from '../abstract-prisma.service';
 import { ConfigModule } from '@nestjs/config';
-import { BookCreationResponseDto } from 'src/book/book-dtos';
+import { BookIdDto } from 'src/book/book-dtos';
 import { Book } from '@prisma/client';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { bookStub, sucessfulBookCreationStub,repeatedBookExceptionStub } from '../../book/test/stubs/index';
@@ -31,7 +31,7 @@ describe('PrismaService', () => {
 
   describe('create a new book',()=>{
     describe('when create a new book',()=>{
-      let bookId:BookCreationResponseDto;
+      let bookId:BookIdDto;
 
       const book:Book= bookStub();
 
@@ -56,7 +56,7 @@ describe('PrismaService', () => {
 
   describe('create an existing book',()=>{
     describe('when create an existing book',()=>{
-      let bookId:BookCreationResponseDto;
+      let bookId:BookIdDto;
 
       const book:Book= bookStub();
 
