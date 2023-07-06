@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
-import { BookCreationDto,BookCreationResponseDto } from '../book-dtos/bookCreationDto';
-import { bookCreationDtoStub, bookStub, sucessfulBookCreationStub } from './stubs/index';
+import { CreateBookDto,BookCreationResponseDto } from '../book-dtos/create-book.dto';
+import { bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
 import { badRequestException } from '../../data-base-common-exceptions/repeated-http-exceptions';
 
@@ -35,7 +35,7 @@ describe('BookController', () => {
     describe ('when create book', () => {
       let bookId:BookCreationResponseDto;
 
-      const bookDto:BookCreationDto = bookCreationDtoStub();
+      const bookDto:CreateBookDto = bookCreationDtoStub();
 
       beforeEach(async () => {
         bookId = await bookController.createBook(bookDto);

@@ -3,7 +3,7 @@ import { bookCreationDtoStub } from './stubs';
 import { ValidationError, validate } from 'class-validator';
 import { describe } from 'node:test';
 import { plainToClass, plainToInstance } from 'class-transformer';
-import { BookCreationDto } from '../book-dtos';
+import { CreateBookDto } from '../book-dtos';
 
 describe('CreateBookDto',()=>{
     beforeEach(async()=>{
@@ -29,7 +29,7 @@ describe('CreateBookDto',()=>{
                 coverUrl: 'link'
             }
 
-            const createBookDto = plainToInstance(BookCreationDto,bookData);
+            const createBookDto = plainToInstance(CreateBookDto,bookData);
 
             
 
@@ -52,7 +52,7 @@ describe('CreateBookDto',()=>{
                 coverUrl: 123
             }
 
-            const createBookDto = plainToInstance(BookCreationDto,bookData);
+            const createBookDto = plainToInstance(CreateBookDto,bookData);
 
             const errors = await validate(createBookDto);
 

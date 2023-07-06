@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { v4 as uuidv4 } from "uuid";
-import { BookCreationResponseDto,BookCreationDto } from './book-dtos';
+import { BookCreationResponseDto,CreateBookDto } from './book-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
@@ -10,7 +10,7 @@ import { createError } from '../data-base-common-exceptions/exceptions-messages'
 export class BookService implements AbstracBookService {
     constructor(private readonly prisma: AbstractPrismaService) {}
     
-    async createBook(book:BookCreationDto):Promise<BookCreationResponseDto> {
+    async createBook(book:CreateBookDto):Promise<BookCreationResponseDto> {
         const data = this.createBookObject(book);
 
         
@@ -29,7 +29,7 @@ export class BookService implements AbstracBookService {
 
     }
 
-    private createBookObject(book:BookCreationDto) {
+    private createBookObject(book:CreateBookDto) {
         return {
             bookId: uuidv4(),
             bookTitle: book.title,

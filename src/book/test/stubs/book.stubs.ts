@@ -1,4 +1,4 @@
-import { BookCreationDto, BookCreationResponseDto } from "src/book/book-dtos";
+import { CreateBookDto, BookCreationResponseDto } from "src/book/book-dtos";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Book } from '@prisma/client';
 
@@ -20,8 +20,8 @@ export const repeatedBookExceptionStub = () => {
     });
 }
 
-export const bookCreationDtoStub = ():BookCreationDto => {
-    const bookCreationDto:BookCreationDto = {
+export const bookCreationDtoStub = ():CreateBookDto => {
+    const bookCreationDto:CreateBookDto = {
         title:'1984',
         coverUrl:''
     }
