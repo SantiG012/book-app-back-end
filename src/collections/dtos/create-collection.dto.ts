@@ -4,6 +4,10 @@ export class CreateCollectionDto {
     @IsString()
     @IsNotEmpty()
     collectionName: string;
+
+    @IsString()
+    @IsNotEmpty()
+    userId: string;
     
     @IsString()
     @IsNotEmpty()
