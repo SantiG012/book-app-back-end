@@ -32,13 +32,13 @@ export class BookService implements AbstracBookService {
     async addAnAuthor(addAuthorsDto:AddAuthorsDto):Promise<AddAuthorsDto> {
         const bookAuthors = this.createBookAuthorObject(addAuthorsDto);
 
-        Promise.all(bookAuthors.map(async (bookAuthor) => {
+        await Promise.all(bookAuthors.map(async (bookAuthor) => {
             try {
                 await this.prisma.book_author.create({
                     data:bookAuthor
                 });
             }catch (error:PrismaClientKnownRequestError | any) {
-                throw createError(error.code || 'UNKNOWN_ERROR','Book');
+                throw createError(error.code || 'UNKNOWN_ERROR','Authors');
             }
         }));
 
