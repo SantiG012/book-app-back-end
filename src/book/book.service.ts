@@ -11,13 +11,13 @@ export class BookService implements AbstracBookService {
     constructor(private readonly prisma: AbstractPrismaService) {}
     
     async createBook(book:CreateBookDto):Promise<BookIdDto> {
-        const data = this.createBookObject(book);
-
         
         try {        
             const bookId:BookIdDto = await this.prisma.book.create({
-                    data:data,
-                    select:{
+                    data:{
+                        bookTitle:book.title,
+                        coverUrl:book.coverUrl,
+                    },select:{
                         bookId:true
                     }
                 });
@@ -46,14 +46,6 @@ export class BookService implements AbstracBookService {
 
     }
 
-    private createBookObject(book:CreateBookDto) {
-        return {
-            bookId: uuidv4(),
-            bookTitle: book.title,
-            coverUrl: book.coverUrl,
-            bookStatus:'active'
-        };
-    }
 
 
     private createBookAuthorObject(addAuthorsDto:AddAuthorsDto) {
