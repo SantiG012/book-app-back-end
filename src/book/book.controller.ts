@@ -14,6 +14,6 @@ export class BookController {
 
     @Post('addAnAuthor')
     async addAnAuthor(@Body() addAuthorDto:AddAuthorsDto):Promise<AddAuthorsDto> {
-        return await this.bookService.addAnAuthor(addAuthorDto);
+        return await this.bookService.addAuthors(addAuthorDto);
     }
 }

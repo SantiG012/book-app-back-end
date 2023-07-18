@@ -28,7 +28,7 @@ export class BookService implements AbstracBookService {
 
     }
 
-    async addAnAuthor(addAuthorsDto:AddAuthorsDto):Promise<AddAuthorsDto> {
+    async addAuthors(addAuthorsDto:AddAuthorsDto):Promise<AddAuthorsDto> {
         const bookId = addAuthorsDto.bookId;
         const bookAuthors = addAuthorsDto.authors;
 
