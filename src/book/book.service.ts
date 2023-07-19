@@ -29,23 +29,29 @@ export class BookService implements AbstracBookService {
     }
 
     async addAuthors(addAuthorsDto:AddAuthorsDto):Promise<AddAuthorsDto> {
-        const bookId = addAuthorsDto.bookId;
-        const bookAuthors = addAuthorsDto.authors;
+        const { bookId, authors } = addAuthorsDto;
+        const addAuthorDtoArray = this.createAuthorDtoArray(bookId,authors); // [{bookId,authorId},{bookId,authorId}] bookId is the same for all authors
 
-        await Promise.all(bookAuthors.map(async (bookAuthor:string) => {
-            try {
-                await this.prisma.book_author.create({
-                    data:{
-                        bookId:bookId,
-                        authorId:bookAuthor
-                    }
-                });
-            }catch (error:PrismaClientKnownRequestError | any) {
-                throw createError(error.code || 'UNKNOWN_ERROR','Authors');
+        try {
+            //Create many ensures the transactionality of the operation
+            await this.prisma.book_author.createMany({
+                data:addAuthorDtoArray
+            });
+
+            return addAuthorsDto;
+
+        }catch (error:PrismaClientKnownRequestError | any) {
+            throw createError(error.code || 'UNKNOWN_ERROR','Book');
+        }
+
+    }
+
+    private createAuthorDtoArray(bookId:string, authors:string[]) {
+        return authors.map((author:string) => {
+            return {
+                bookId:bookId,
+                authorId:author
             }
-        }));
-
-        return addAuthorsDto;
-
+        });
     }
 }
