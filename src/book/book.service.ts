@@ -13,10 +13,8 @@ export class BookService implements AbstracBookService {
         
         try {        
             const bookId:BookIdDto = await this.prisma.book.create({
-                    data:{
-                        bookTitle:book.title,
-                        coverUrl:book.coverUrl,
-                    },select:{
+                    data:book
+                    ,select:{
                         bookId:true
                     }
                 });
