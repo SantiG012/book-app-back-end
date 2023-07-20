@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { CreateCollectionDto, CollectionIdDto } from './dtos';
 import { AbstractPrismaService } from 'src/prisma/abstract-prisma.service';
-import { v4 as uuidv4 } from "uuid";
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
-import { create } from 'domain';
+
 
 @Injectable()
 export class CollectionsService implements AbstractCollectionsService {
@@ -14,31 +13,17 @@ export class CollectionsService implements AbstractCollectionsService {
     ) {}
 
     async createCollection(createCollectionDto: CreateCollectionDto): Promise<CollectionIdDto> {
-        const data = this.createCollectionObject(createCollectionDto);
-        let collection:CollectionIdDto;
-
         try{
-             collection = await this.prismaService.collections.create({
-                    data: data,
-                    select: {
-                        collectionId: true
-                    }
-                });
+            const collection =  this.prismaService.collections.create({
+                data: createCollectionDto,
+                select: {
+                    collectionId: true
+                }
+            });
+
+            return await collection;
         }catch(error:PrismaClientKnownRequestError | any){
             throw createError(error.code || 'UNKNOWN_ERROR','Collection');
         }
-
-        return collection;
     }
-
-    private createCollectionObject(createCollectionDto:CreateCollectionDto){
-        return {
-            collectionId: uuidv4(),
-            collectionName: createCollectionDto.collectionName,
-            userId: createCollectionDto.userId,
-            coverUrl: createCollectionDto.coverUrl,
-            collectionStatus:'active'
-        }
-    }
-
 }
