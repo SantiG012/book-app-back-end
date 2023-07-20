@@ -1,4 +1,4 @@
-import { CreateBookDto, BookIdDto, AddAuthorsDto } from "src/book/book-dtos";
+import { CreateBookDto, BookIdDto, AddAuthorDto } from "src/book/book-dtos";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Book } from '@prisma/client';
 
@@ -42,10 +42,10 @@ export const bookStub = ():Book => {
     return book;
 }
 
-export const addAuthorsDtoStub = ():AddAuthorsDto => {
-    const addAuthorsDto:AddAuthorsDto = {
+export const addAuthorsDtoStub = ():AddAuthorDto => {
+    const addAuthorsDto:AddAuthorDto = {
         bookId:'bookId',
-        authors:['authorId','authorId2']
+        authorId:'authorId'
     }
 
     return addAuthorsDto;
