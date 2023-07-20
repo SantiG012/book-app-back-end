@@ -1,6 +1,6 @@
 import { Body, Controller,Post} from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
-import { CreateBookDto, BookIdDto, AddAuthorDto } from './book-dtos';
+import { CreateBookDto, BookIdDto, AddAuthorDto, AddedAuthorsDto } from './book-dtos';
 
 @Controller('book')
 export class BookController {
@@ -13,7 +13,7 @@ export class BookController {
     }
 
     @Post('addAnAuthor')
-    async addAnAuthor(@Body() addAuthorDto:AddAuthorDto[]):Promise<AddAuthorDto[]> {
+    async addAnAuthor(@Body() addAuthorDto:AddAuthorDto[]):Promise<AddedAuthorsDto> {
         return await this.bookService.addAuthors(addAuthorDto);
     }
 }
