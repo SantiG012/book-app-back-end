@@ -37,7 +37,8 @@ export class BookService implements AbstracBookService {
 
             return addAuthorDto;
         } catch (error:PrismaClientKnownRequestError | any) {
-            throw createError(error.code || 'UNKNOWN_ERROR','Book');
+
+            throw createError(error.code || 'UNKNOWN_ERROR','Authors');
         }
 
     }
