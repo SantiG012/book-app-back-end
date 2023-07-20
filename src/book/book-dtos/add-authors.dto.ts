@@ -1,13 +1,11 @@
-import { ArrayNotEmpty, IsArray, IsNotEmpty, IsString } from 'class-validator';
+import {IsNotEmpty, IsString } from 'class-validator';
 
-export class AddAuthorsDto {
+export class AddAuthorDto {
     @IsNotEmpty()
     @IsString()
     bookId: string;
 
-    @IsArray()
-    @ArrayNotEmpty({message:"author's array should not be empty"})
-    @IsString({ each: true })
-    @IsNotEmpty({ each: true })
-    authors: string[];
+    @IsString()
+    @IsNotEmpty()
+    authorId: string;
 }

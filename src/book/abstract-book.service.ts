@@ -1,7 +1,7 @@
-import { CreateBookDto,BookIdDto, AddAuthorsDto } from "./book-dtos";
+import { CreateBookDto,BookIdDto, AddAuthorDto } from "./book-dtos";
 
 
 export abstract class AbstracBookService{
     abstract  createBook(book: CreateBookDto):Promise<BookIdDto>;
-    abstract  addAuthors(addAuthorDto:AddAuthorsDto):Promise<AddAuthorsDto>;
+    abstract  addAuthors(addAuthorDto:AddAuthorDto):Promise<AddAuthorDto>;
 }
