@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
-import { AddAuthorsDto, BookIdDto,CreateBookDto } from './book-dtos';
+import { AddAuthorDto, BookIdDto,CreateBookDto } from './book-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
@@ -28,30 +28,17 @@ export class BookService implements AbstracBookService {
 
     }
 
-    async addAuthors(addAuthorsDto:AddAuthorsDto):Promise<AddAuthorsDto> {
-        const { bookId, authors } = addAuthorsDto;
-        const addAuthorDtoArray = this.createAuthorDtoArray(bookId,authors); // [{bookId,authorId},{bookId,authorId}] bookId is the same for all authors
+    async addAuthors(addAuthorDto:AddAuthorDto[]):Promise<AddAuthorDto[]> {
 
-        try {
-            //Create many ensures the transactionality of the operation
+        try{
             await this.prisma.book_author.createMany({
-                data:addAuthorDtoArray
-            });
+                data:addAuthorDto
+            })
 
-            return addAuthorsDto;
-
-        }catch (error:PrismaClientKnownRequestError | any) {
+            return addAuthorDto;
+        } catch (error:PrismaClientKnownRequestError | any) {
             throw createError(error.code || 'UNKNOWN_ERROR','Book');
         }
 
-    }
-
-    private createAuthorDtoArray(bookId:string, authors:string[]) {
-        return authors.map((author:string) => {
-            return {
-                bookId:bookId,
-                authorId:author
-            }
-        });
     }
 }
