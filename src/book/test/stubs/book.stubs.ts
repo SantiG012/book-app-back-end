@@ -42,7 +42,7 @@ export const bookStub = ():Book => {
     return book;
 }
 
-export const addAuthorsDtoStub = ():AddAuthorDto => {
+export const addAuthorDtoStub = ():AddAuthorDto => {
     const addAuthorsDto:AddAuthorDto = {
         bookId:'bookId',
         authorId:'authorId'
