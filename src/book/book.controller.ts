@@ -13,7 +13,7 @@ export class BookController {
     }
 
     @Post('addAnAuthor')
-    async addAnAuthor(@Body() addAuthorDto:AddAuthorDto[]):Promise<AddedAuthorsDto> {
+    async addAuthors(@Body() addAuthorDto:AddAuthorDto[]):Promise<AddedAuthorsDto> {
         return await this.bookService.addAuthors(addAuthorDto);
     }
 }
