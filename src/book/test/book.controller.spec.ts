@@ -5,7 +5,7 @@ import { AbstracBookService } from '../abstract-book.service';
 import { CreateBookDto,BookIdDto, AddedAuthorsDto, AddAuthorDto } from '../book-dtos/index';
 import { addAuthorDtoStub, addedAuthorsDtoStub, bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
-import { badRequestException } from '../../data-base-common-exceptions/repeated-http-exceptions';
+import { badRequestException, conflictException } from '../../data-base-common-exceptions/repeated-http-exceptions';
 
 jest.mock('../book.service');
 
@@ -98,4 +98,26 @@ describe('BookController', () => {
     });
   });
 
-});
+  describe('add an existing author',()=>{ //It means that the author is already added to the book
+    describe('when add an existing author',()=>{
+        beforeEach(async()=>{
+          bookService.addAuthors = jest.fn().mockResolvedValue(()=>{
+            throw conflictException('Author');
+          });
+        });
+
+        it('it should throw an error',async()=>{
+          try{
+            await bookController.addAuthors(Array(1).fill(addAuthorDtoStub()));
+          } catch(error:HttpException | any){
+            const message = 'Author already exists';
+            const status = 409;
+            
+            expect(error.message).toBe(message);
+            expect(error.status).toBe(status);
+            expect(error).toBeInstanceOf(HttpException);
+          }
+        });
+      });
+    });
+  });
