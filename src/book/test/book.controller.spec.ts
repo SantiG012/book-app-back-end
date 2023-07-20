@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BookController } from '../book.controller';
 import { BookService } from '../book.service';
 import { AbstracBookService } from '../abstract-book.service';
-import { CreateBookDto,BookIdDto } from '../book-dtos/index';
-import { bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
+import { CreateBookDto,BookIdDto, AddedAuthorsDto, AddAuthorDto } from '../book-dtos/index';
+import { addAuthorDtoStub, addedAuthorsDtoStub, bookCreationDtoStub, sucessfulBookCreationStub } from './stubs/index';
 import { HttpException } from '@nestjs/common';
 import { badRequestException } from '../../data-base-common-exceptions/repeated-http-exceptions';
 
@@ -77,5 +77,25 @@ describe('BookController', () => {
 
     });
   })
+
+  describe('add authors', () => {
+    describe('when add authors', () => {
+      let authorsCount:AddedAuthorsDto;
+
+      const addAuthorDto:AddAuthorDto[] = Array(1).fill(addAuthorDtoStub());
+      
+      beforeEach(async () => {
+        authorsCount = await bookController.addAuthors(addAuthorDto);
+      });
+
+      it('should call bookService', () => {
+        expect(bookService.addAuthors).toBeCalledWith(addAuthorDto);
+      });
+
+      it('should return the number of added authors', () => {
+        expect(authorsCount).toEqual(addedAuthorsDtoStub());
+      });
+    });
+  });
 
 });
