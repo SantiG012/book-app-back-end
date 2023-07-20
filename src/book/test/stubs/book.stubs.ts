@@ -22,7 +22,7 @@ export const repeatedBookExceptionStub = () => {
 
 export const bookCreationDtoStub = ():CreateBookDto => {
     const bookCreationDto:CreateBookDto = {
-        title:'1984',
+        bookTitle:'1984',
         coverUrl:''
     }
 
