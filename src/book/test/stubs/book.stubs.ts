@@ -50,3 +50,11 @@ export const addAuthorDtoStub = ():AddAuthorDto => {
 
     return addAuthorsDto;
 };
+
+export const addedAuthorsDtoStub = () => {
+    const addedAuthorsDto = {
+        count:1
+    }
+
+    return addedAuthorsDto;
+};
