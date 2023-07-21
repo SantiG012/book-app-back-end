@@ -24,10 +24,9 @@ describe('CreateBookDto',()=>{
     describe('invalid data', ()=>{
         it('should fail if title is empty',async ()=>{
 
-            const bookData = {
-                title: '',
-                coverUrl: 'link'
-            }
+            const bookData = bookCreationDtoStub();
+
+            bookData.bookTitle = '';
 
             const createBookDto = plainToInstance(CreateBookDto,bookData);
 
@@ -38,9 +37,9 @@ describe('CreateBookDto',()=>{
             expect(errors).toStrictEqual([plainToClass(ValidationError,{
                 target: createBookDto,
                 value: '',
-                property: 'title',
+                property: 'bookTitle',
                 constraints: {
-                    isNotEmpty: 'title should not be empty'
+                    isNotEmpty: 'bookTitle should not be empty'
                 },
                 children: [],
             })]);
@@ -48,7 +47,7 @@ describe('CreateBookDto',()=>{
 
         it('should fail if coverUrl is not a string',async ()=>{
             const bookData = {
-                title: 'title',
+                bookTitle: 'title',
                 coverUrl: 123
             }
 
