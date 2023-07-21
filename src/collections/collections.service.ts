@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { CreateCollectionDto, CollectionIdDto } from './dtos';
-import { AbstractPrismaService } from 'src/prisma/abstract-prisma.service';
+import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
