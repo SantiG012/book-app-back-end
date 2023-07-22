@@ -23,6 +23,7 @@ export class CollectionsService implements AbstractCollectionsService {
 
             return await collection;
         }catch(error:PrismaClientKnownRequestError | any){
+
             throw createError(error.code || 'UNKNOWN_ERROR','Collection');
         }
     }
