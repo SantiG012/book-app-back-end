@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, ValidateIf } from "class-validator";
 
 export class CreateCollectionDto {
     @IsString()
@@ -9,8 +9,8 @@ export class CreateCollectionDto {
     @IsNotEmpty()
     userId: string;
     
+    @ValidateIf((o) => {return ((o.coverUrl !== undefined) || (o.coverUrl !== null))})
     @IsString()
-    @IsNotEmpty()
     coverUrl: string;
 }
 
