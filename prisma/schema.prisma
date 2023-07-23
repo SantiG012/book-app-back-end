@@ -57,7 +57,7 @@ model Collections_book {
 }
 
 model User {
-  userId       String        @id(map: "pk_users") @default(dbgenerated("gen_random_uuid()")) @db.VarChar(15)
+  userId       String        @id(map: "pk_users") @db.VarChar(15)
   userName     String        @db.VarChar(40)
   userLastName String        @db.VarChar(40)
   userStatus   String        @default("active") @db.VarChar(10)
