@@ -4,9 +4,10 @@ import { BookModule } from './book/book.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthorModule } from './author/author.module';
 import { CollectionsModule } from './collections/collections.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [AuthModule, BookModule, PrismaModule, AuthorModule, CollectionsModule],
+  imports: [AuthModule, BookModule, PrismaModule, AuthorModule, CollectionsModule, UserModule],
   controllers: [],
   providers: []
 })
