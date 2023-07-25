@@ -8,6 +8,7 @@ import { AbstractUserService } from './abstract-user.service';
     provide: AbstractUserService,
     useClass: UserService
   }],
+  exports: [AbstractUserService]
 
 })
 export class UserModule {}
