@@ -16,12 +16,8 @@ export class AuthService implements AbstractAuthService{
     async singUp(createUserDto:CreateUserDto): Promise<{ access_token: string; }> {
         const userCredentials:UserCredentialsDto = await this.userService.createUser(createUserDto);
 
-        const payload = {
-            sub: userCredentials.userId,
-            userName: userCredentials.userName,
-            userLastName: userCredentials.userLastName,
-        };
-
+        const payload = this.createPayload(userCredentials);
+        
         const secret = this.configService.get<string>('JWT_SECRET');
 
         const token = await this.jwtService.signAsync(
@@ -33,5 +29,13 @@ export class AuthService implements AbstractAuthService{
         );
 
         return { access_token: token };
+    }
+
+    private createPayload(userCredentials:UserCredentialsDto){
+        return {
+            sub: userCredentials.userId,
+            userName: userCredentials.userName,
+            userLastName: userCredentials.userLastName,
+        };
     }
 }
