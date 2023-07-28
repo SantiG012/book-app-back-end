@@ -20,16 +20,8 @@ export class AuthService implements AbstractAuthService{
         const userCredentials:UserCredentialsDto = await this.userService.createUser(createUserDto);
 
         const payload = this.createPayload(userCredentials);
-        
-        const secret = this.configService.get<string>('JWT_SECRET');
 
-        const token = await this.jwtService.signAsync(
-            payload,
-            {
-                expiresIn: '45m',
-                secret: secret,
-            }
-        );
+        const token:string = await this.generateToken(payload);
 
         return { access_token: token };
     }
