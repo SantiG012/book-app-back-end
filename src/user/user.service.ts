@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { AbstractUserService } from './abstract-user.service';
-import { CreateUserDto, UserCredentialsDto } from './user-dtos';
+import { CreateUserDto, LogInDto, UserCredentialsDto, UserIdDto } from './user-dtos';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
@@ -33,12 +33,16 @@ export class UserService implements AbstractUserService{
         }
     }
 
-    async validateUser(userCredentialsDto:UserCredentialsDto): Promise<UserCredentialsDto> {
+    async getUser(userIdDto:UserIdDto): Promise<LogInDto> {
         try{
-            const user:UserCredentialsDto = await this.prismaService.user.findFirst({
+            const user:LogInDto = await this.prismaService.user.findFirst({
                 where:{
-                    userId: userCredentialsDto.userId,
+                    userId: userIdDto.userId,
                     userStatus: 'active'
+                },
+                select:{
+                    userId: true,
+                    password: true
                 }
             });
 
