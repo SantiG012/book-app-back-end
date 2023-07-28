@@ -32,4 +32,19 @@ export class UserService implements AbstractUserService{
             throw createError(error.code || 'UNKNOWN_ERROR','User');
         }
     }
+
+    async validateUser(userCredentialsDto:UserCredentialsDto): Promise<UserCredentialsDto> {
+        try{
+            const user:UserCredentialsDto = await this.prismaService.user.findFirst({
+                where:{
+                    userId: userCredentialsDto.userId,
+                    userStatus: 'active'
+                }
+            });
+
+            return user;
+        } catch (error:PrismaClientKnownRequestError | any) {
+            throw createError(error.code || 'UNKNOWN_ERROR','User');
+        }
+    }
 }
