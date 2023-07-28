@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { AbstractUserService } from './abstract-user.service';
-import { CreateUserDto, UserCredentialsDto } from './user-dtos';
+import { CreateUserDto, LogInDto, UserCredentialsDto, UserIdDto } from './user-dtos';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService implements AbstractUserService{
@@ -28,6 +29,21 @@ export class UserService implements AbstractUserService{
 
             return user;
 
+        } catch (error:PrismaClientKnownRequestError | any) {
+            throw createError(error.code || 'UNKNOWN_ERROR','User');
+        }
+    }
+
+    async getUser(userIdDto:UserIdDto): Promise<User> {
+        try{
+            const user:User = await this.prismaService.user.findFirst({
+                where:{
+                    userId: userIdDto.userId,
+                    userStatus: 'active'
+                }
+            });
+
+            return user;
         } catch (error:PrismaClientKnownRequestError | any) {
             throw createError(error.code || 'UNKNOWN_ERROR','User');
         }
