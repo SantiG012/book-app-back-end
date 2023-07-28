@@ -5,6 +5,7 @@ import { CreateUserDto, LogInDto, UserCredentialsDto, UserIdDto } from './user-d
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService implements AbstractUserService{
@@ -33,16 +34,12 @@ export class UserService implements AbstractUserService{
         }
     }
 
-    async getUser(userIdDto:UserIdDto): Promise<LogInDto> {
+    async getUser(userIdDto:UserIdDto): Promise<User> {
         try{
-            const user:LogInDto = await this.prismaService.user.findFirst({
+            const user:User = await this.prismaService.user.findFirst({
                 where:{
                     userId: userIdDto.userId,
                     userStatus: 'active'
-                },
-                select:{
-                    userId: true,
-                    password: true
                 }
             });
 
