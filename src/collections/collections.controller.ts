@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CollectionIdDto, CreateCollectionDto } from './dtos/index';
 import { AbstractCollectionsService } from './abstract-collections.service';
+import { JwtAuthGuard } from 'src/auth/guards';
 
+@UseGuards(JwtAuthGuard)
 @Controller('collections')
 export class CollectionsController {
     constructor(
