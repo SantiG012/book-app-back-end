@@ -2,6 +2,7 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CollectionIdDto, CreateCollectionDto } from './dtos/index';
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { GetUser } from 'src/auth/decorators';
 
 @UseGuards(JwtAuthGuard)
 @Controller('collections')
@@ -11,7 +12,10 @@ export class CollectionsController {
     ) {}
 
     @Post('createCollection')
-    async createCollection(@Body()createCollectionDto:CreateCollectionDto): Promise<CollectionIdDto> {
-        return await this.collectionsService.createCollection(createCollectionDto);
+    async createCollection(
+        @Body()createCollectionDto:CreateCollectionDto,
+        @GetUser('userId') userId: string
+    ): Promise<CollectionIdDto> {
+        return await this.collectionsService.createCollection(createCollectionDto, userId);
     }
 }
