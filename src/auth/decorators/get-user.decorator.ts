@@ -4,7 +4,7 @@ export const GetUser = createParamDecorator((
     data: string | undefined,
     ctx: ExecutionContext,
 ) => {
-    const request: Express.Request = ctx.switchToHttp().getRequest();
+    const request = ctx.switchToHttp().getRequest();
 
-    return request
+    return data ? request?.user[data] : request.user;
 });
