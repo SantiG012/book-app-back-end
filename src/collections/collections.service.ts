@@ -12,11 +12,11 @@ export class CollectionsService implements AbstractCollectionsService {
         private readonly prismaService:AbstractPrismaService
     ) {}
 
-    async createCollection(createCollectionDto: CreateCollectionDto, JwtUserId:string): Promise<CollectionIdDto> {
+    async createCollection(createCollectionDto: CreateCollectionDto, sub:string): Promise<CollectionIdDto> {
         try{
             const collection =  this.prismaService.collections.create({
                 data: {
-                    userId: JwtUserId,
+                    userId: sub,
                     collectionName: createCollectionDto.collectionName,
                     coverUrl: createCollectionDto.coverUrl,
                 },

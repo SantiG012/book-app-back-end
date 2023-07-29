@@ -14,8 +14,8 @@ export class CollectionsController {
     @Post('createCollection')
     async createCollection(
         @Body()createCollectionDto:CreateCollectionDto,
-        @GetUser('userId') userId: string
+        @GetUser('sub') sub: string
     ): Promise<CollectionIdDto> {
-        return await this.collectionsService.createCollection(createCollectionDto, userId);
+        return await this.collectionsService.createCollection(createCollectionDto, sub);
     }
 }
