@@ -1,7 +1,8 @@
 import { Body, Controller,Post, UseGuards} from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
-import { CreateBookDto, BookIdDto, AddAuthorDto, AddedAuthorsDto } from './book-dtos';
+import { CreateBookDto, BookIdDto, AddAuthorDto } from './book-dtos';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { CountDto } from 'src/global-dtos';
 
 @UseGuards(JwtAuthGuard)
 @Controller('book')
@@ -15,7 +16,7 @@ export class BookController {
     }
 
     @Post('addAnAuthor')
-    async addAuthors(@Body() addAuthorDto:AddAuthorDto[]):Promise<AddedAuthorsDto> {
+    async addAuthors(@Body() addAuthorDto:AddAuthorDto[]):Promise<CountDto> {
         return await this.bookService.addAuthors(addAuthorDto);
     }
 }

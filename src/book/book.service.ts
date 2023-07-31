@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
-import { AddAuthorDto, BookIdDto,CreateBookDto,AddedAuthorsDto } from './book-dtos';
+import { AddAuthorDto, BookIdDto,CreateBookDto } from './book-dtos';
+import { CountDto } from 'src/global-dtos';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 
@@ -26,7 +27,7 @@ export class BookService implements AbstracBookService {
 
     }
 
-    async addAuthors(addAuthorDto:AddAuthorDto[]):Promise<AddedAuthorsDto> {
+    async addAuthors(addAuthorDto:AddAuthorDto[]):Promise<CountDto> {
 
         try{
             const resultCount = this.prisma.book_author.createMany({
