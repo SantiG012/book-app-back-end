@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractCollectionsService } from './abstract-collections.service';
-import { CreateCollectionDto, CollectionIdDto, AddBookDto } from './dtos';
+import { CreateCollectionDto, CollectionIdDto, AddBookDto, CollectionInfoDto } from './dtos';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
@@ -41,6 +41,27 @@ export class CollectionsService implements AbstractCollectionsService {
 
             return count;
         } catch (error){
+            throw createError(error.code?error.code:'UNKNOWN_ERROR','Collection');
+        }
+    }
+
+    async getCollections(sub: string): Promise<CollectionInfoDto[]> {
+        
+        try{
+            const collections = await this.prismaService.collections.findMany({
+                where: {
+                    userId: sub
+                },
+                select: {
+                    collectionId: true,
+                    collectionName: true,
+                    coverUrl: true
+                }
+            });
+
+            return collections;
+
+        }catch(error){
             throw createError(error.code?error.code:'UNKNOWN_ERROR','Collection');
         }
     }
