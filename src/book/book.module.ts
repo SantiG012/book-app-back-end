@@ -8,6 +8,7 @@ import { AbstracBookService } from './abstract-book.service';
   providers: [{
     provide: AbstracBookService,
     useClass: BookService
-  }]
+  }],
+  exports: [AbstracBookService]
 })
 export class BookModule {}
