@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractCollectionsService } from './abstract-collections.service';
-import { CreateCollectionDto, CollectionIdDto, AddBookDto, CollectionInfoDto } from './dtos';
+import { CreateCollectionDto, CollectionIdDto, CollectionBookDto, CollectionInfoDto } from './dtos';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
@@ -33,7 +33,7 @@ export class CollectionsService implements AbstractCollectionsService {
         }
     }
 
-    async addBooks(addBooksDto: AddBookDto[]): Promise<CountDto> {
+    async addBooks(addBooksDto: CollectionBookDto[]): Promise<CountDto> {
         try{
             const count:CountDto = await this.prismaService.collections_book.createMany({
                 data: addBooksDto
