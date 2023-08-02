@@ -1,18 +1,15 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CollectionBookDto, CollectionIdDto, CollectionInfoDto, CreateCollectionDto } from './dtos/index';
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { GetUser } from 'src/auth/decorators';
 import { CountDto } from 'src/global-dtos';
-import { BookInfoDto } from 'src/book/book-dtos';
-import { AbstracBookService } from 'src/book/abstract-book.service';
 
 @UseGuards(JwtAuthGuard)
 @Controller('collections')
 export class CollectionsController {
     constructor(
          private readonly collectionsService: AbstractCollectionsService,
-         private readonly bookService:AbstracBookService
     ) {}
 
     @Post('createCollection')
