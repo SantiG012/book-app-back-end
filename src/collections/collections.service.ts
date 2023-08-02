@@ -5,6 +5,7 @@ import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
 import { CountDto } from 'src/global-dtos';
+import { BookIdDto } from 'src/book/book-dtos';
 
 
 @Injectable()
@@ -63,6 +64,26 @@ export class CollectionsService implements AbstractCollectionsService {
 
         }catch(error){
             throw createError(error.code?error.code:'UNKNOWN_ERROR','Collection');
+        }
+    }
+
+    async getBooksByCollectionId(collectionIdDto: CollectionIdDto): Promise<string[]> {
+        try{
+            const booksIdsDto:BookIdDto[] = await this.prismaService.collections_book.findMany({
+                where: {
+                    collectionId: collectionIdDto.collectionId
+                },
+                select:{
+                    bookId:true
+                },
+            });
+
+            const booksIds:string[] = booksIdsDto.map(bookIdDto => bookIdDto.bookId);
+
+            return booksIds;
+
+        }catch(error){
+            throw createError(error.code || 'UNKNOWN_ERROR','Collection');
         }
     }
 }
