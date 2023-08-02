@@ -32,12 +32,4 @@ export class CollectionsController {
     async getCollections(@GetUser('sub') sub: string): Promise<CollectionInfoDto[]> {
         return await this.collectionsService.getCollections(sub);
     }
-
-    @Get('getBooksByCollectionId/:collectionId')
-    async getBooksByCollectionId(@Param('collectionId')collectionId:CollectionIdDto):Promise<BookInfoDto[]>{
-        const bookIds:string[] = await this.collectionsService.getBooksByCollectionId(collectionId);
-        const books:BookInfoDto[] = await this.bookService.findBooksById(bookIds);
-        
-        return books;
-    }
 }

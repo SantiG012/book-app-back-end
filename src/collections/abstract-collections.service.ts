@@ -5,5 +5,4 @@ export abstract class AbstractCollectionsService {
     abstract createCollection(createCollectionDto:CreateCollectionDto, userId:string): Promise<CollectionIdDto>;
     abstract addBooks(addBooksDto: CollectionBookDto[]): Promise<CountDto>;
     abstract getCollections(sub: string): Promise<CollectionInfoDto[]>;
-    abstract getBooksByCollectionId(collectionIdDto:CollectionIdDto):Promise<string[]>;
 }
