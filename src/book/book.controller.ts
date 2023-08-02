@@ -3,7 +3,6 @@ import { AbstracBookService } from './abstract-book.service';
 import { CreateBookDto, BookIdDto, AddAuthorDto, BookInfoDto } from './book-dtos';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { CountDto } from 'src/global-dtos';
-import { CollectionIdDto } from 'src/collections/dtos';
 
 @UseGuards(JwtAuthGuard)
 @Controller('book')
@@ -22,7 +21,7 @@ export class BookController {
     }
 
     @Get('getBooksByCollectionId/:collectionId')
-    async getBooksByCollectionId(@Param('collectionId')collectionId:CollectionIdDto):Promise<BookInfoDto[]>{
+    async getBooksByCollectionId(@Param('collectionId')collectionId:string):Promise<BookInfoDto[]>{
         const bookIds:string[] = await this.bookService.getBookIdsFromCollection(collectionId);
         const books:BookInfoDto[] = await this.bookService.findBooksById(bookIds);
 

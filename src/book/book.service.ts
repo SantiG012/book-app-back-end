@@ -60,12 +60,12 @@ export class BookService implements AbstracBookService {
         }
     }
 
-    async getBookIdsFromCollection(collectionIdDto: CollectionIdDto): Promise<string[]> {
+    async getBookIdsFromCollection(collectionIdParam: string): Promise<string[]> {
         try{
             
             const bookIdsDto:BookIdDto[] = await this.prisma.collections_book.findMany({
                 where:{
-                    collectionId:collectionIdDto.collectionId
+                    collectionId:collectionIdParam
                 },
                 select:{
                     bookId:true
