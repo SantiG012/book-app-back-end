@@ -4,7 +4,7 @@ import { CreateCollectionDto, CollectionIdDto, CollectionBookDto, CollectionInfo
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
-import { CountDto } from 'src/global-dtos';
+import { CountDto, CoverUrlDto } from 'src/global-dtos';
 
 
 @Injectable()
@@ -82,6 +82,25 @@ export class CollectionsService implements AbstractCollectionsService {
             
         } catch(error){
             throw createError(error.code || 'UNKNOWN_ERROR', "collection's name")
+        }
+    }
+
+    async editCollectionCoverUrl(collectionId: string, coverUrl: CoverUrlDto): Promise<CollectionIdDto> {
+        try{
+            const collectionIdDto:CollectionIdDto = await this.prismaService.collections.update({
+                where:{
+                    collectionId
+                },
+                data:coverUrl,
+                select:{
+                    collectionId:true
+                }
+            })
+
+            return collectionIdDto
+            
+        } catch(error){
+            throw createError(error.code || 'UNKNOWN_ERROR', "collection's cover url")
         }
     }
 }

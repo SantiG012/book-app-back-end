@@ -1,4 +1,4 @@
-import { CountDto } from "src/global-dtos";
+import { CountDto, CoverUrlDto } from "src/global-dtos";
 import { CollectionBookDto, CollectionIdDto, CollectionInfoDto, CreateCollectionDto, CollectionNameDto } from "./dtos";
 
 export abstract class AbstractCollectionsService {
@@ -6,4 +6,5 @@ export abstract class AbstractCollectionsService {
     abstract addBooks(addBooksDto: CollectionBookDto[]): Promise<CountDto>;
     abstract getCollections(sub: string): Promise<CollectionInfoDto[]>;
     abstract editCollectionName(collectionId:string, collectionNameDto:CollectionNameDto): Promise <CollectionIdDto>;
+    abstract editCollectionCoverUrl(collectionId:string, coverUrl:CoverUrlDto): Promise <CollectionIdDto>;
 }

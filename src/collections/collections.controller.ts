@@ -3,7 +3,7 @@ import { CollectionBookDto, CollectionIdDto, CollectionInfoDto, CreateCollection
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { GetUser } from 'src/auth/decorators';
-import { CountDto } from 'src/global-dtos';
+import { CountDto, CoverUrlDto } from 'src/global-dtos';
 
 @UseGuards(JwtAuthGuard)
 @Controller('collections')
@@ -33,5 +33,10 @@ export class CollectionsController {
     @Put('editCollectionName/:collectionId')
     async editCollectionName(@Param('collectionId') collectionId:string,@Body() collectionNameDto:CollectionNameDto):Promise<CollectionIdDto> {
         return await this.collectionsService.editCollectionName(collectionId, collectionNameDto);
+    }
+
+    @Put('editCollectionCoverUrl/:collectionId')
+    async editCollectionCoverUrl(@Param('collectionId') collectionId:string,@Body() coverUrlDto:CoverUrlDto):Promise<CollectionIdDto> {
+        return await this.collectionsService.editCollectionCoverUrl(collectionId, coverUrlDto);
     }
 }
