@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { CollectionBookDto, CollectionIdDto, CollectionInfoDto, CreateCollectionDto } from './dtos/index';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { CollectionBookDto, CollectionIdDto, CollectionInfoDto, CreateCollectionDto, CollectionNameDto } from './dtos/index';
 import { AbstractCollectionsService } from './abstract-collections.service';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { GetUser } from 'src/auth/decorators';
@@ -28,5 +28,10 @@ export class CollectionsController {
     @Get('getCollections')
     async getCollections(@GetUser('sub') sub: string): Promise<CollectionInfoDto[]> {
         return await this.collectionsService.getCollections(sub);
+    }
+
+    @Put('editCollectionName/:collectionId')
+    async editCollectionName(@Param('collectionId') collectionId:string,@Body() collectionNameDto:CollectionNameDto):Promise<CollectionIdDto> {
+        return await this.collectionsService.editCollectionName(collectionId, collectionNameDto);
     }
 }
