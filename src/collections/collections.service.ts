@@ -50,7 +50,8 @@ export class CollectionsService implements AbstractCollectionsService {
         try{
             const collections = await this.prismaService.collections.findMany({
                 where: {
-                    userId: sub
+                    userId: sub,
+                    collectionStatus: 'active'
                 },
                 select: {
                     collectionId: true,

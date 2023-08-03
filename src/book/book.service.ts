@@ -50,7 +50,8 @@ export class BookService implements AbstracBookService {
                 where:{
                     bookId:{
                         in:bookIds
-                    }
+                    },
+                    bookStatus:'active'
                 }
             });
 
@@ -65,7 +66,8 @@ export class BookService implements AbstracBookService {
             
             const bookIdsDto:BookIdDto[] = await this.prisma.collections_book.findMany({
                 where:{
-                    collectionId:collectionIdParam
+                    collectionId:collectionIdParam,
+                    collectionsBookStatus:'active'
                 },
                 select:{
                     bookId:true
