@@ -1,8 +1,8 @@
-import { Body, Controller,Get,Param,Post, UseGuards} from '@nestjs/common';
+import { Body, Controller,Get,Param,Post, Put, UseGuards} from '@nestjs/common';
 import { AbstracBookService } from './abstract-book.service';
 import { CreateBookDto, BookIdDto, AddAuthorDto, BookInfoDto } from './book-dtos';
 import { JwtAuthGuard } from 'src/auth/guards';
-import { CountDto } from 'src/global-dtos';
+import { CountDto, CoverUrlDto } from 'src/global-dtos';
 
 @UseGuards(JwtAuthGuard)
 @Controller('book')
@@ -21,10 +21,15 @@ export class BookController {
     }
 
     @Get('getBooksByCollectionId/:collectionId')
-    async getBooksByCollectionId(@Param('collectionId')collectionId:string):Promise<BookInfoDto[]>{
+    async getBooksByCollectionId(@Param('collectionId') collectionId:string):Promise<BookInfoDto[]>{
         const bookIds:string[] = await this.bookService.getBookIdsFromCollection(collectionId);
         const books:BookInfoDto[] = await this.bookService.findBooksById(bookIds);
 
         return books;
+    }
+
+    @Put('editBookCoverUrl/:bookId')
+    async editBookCoverUrl(@Param('bookId') bookId:string, @Body() coverUrl:CoverUrlDto):Promise<BookIdDto>{
+        return await this.bookService.editBookCoverUrl(bookId, coverUrl)
     }
 }

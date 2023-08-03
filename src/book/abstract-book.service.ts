@@ -1,5 +1,5 @@
 import { CreateBookDto,BookIdDto, AddAuthorDto, BookInfoDto} from "./book-dtos";
-import { CountDto } from "src/global-dtos";
+import { CountDto, CoverUrlDto } from "src/global-dtos";
 
 
 export abstract class AbstracBookService{
@@ -7,4 +7,5 @@ export abstract class AbstracBookService{
     abstract  addAuthors(addAuthorDto:AddAuthorDto[]):Promise<CountDto>;
     abstract findBooksById(bookIds:string[]):Promise<BookInfoDto[]>;
     abstract getBookIdsFromCollection(collectionIdDto:string):Promise<string[]>;
+    abstract editBookCoverUrl(bookId:string, coverUrl:CoverUrlDto):Promise<BookIdDto>;
 }
