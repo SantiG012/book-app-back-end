@@ -97,7 +97,7 @@ export class BookService implements AbstracBookService {
             return bookIdDto
 
         }catch(error){
-            throw createError(error.code || 'UNKNOWN_ERROR','Book');
+            throw createError(error.code || 'UNKNOWN_ERROR',"book's cover url");
         }
     }
 }
