@@ -32,4 +32,9 @@ export class BookController {
     async editBookCoverUrl(@Param('bookId') bookId:string, @Body() coverUrl:CoverUrlDto):Promise<BookIdDto>{
         return await this.bookService.editBookCoverUrl(bookId, coverUrl)
     }
+
+    @Put('deleteBook/:bookId')
+    async deleteBook(@Param('bookId') bookId:string):Promise<BookIdDto>{
+        return await this.bookService.deleteBook(bookId);
+    }
 }

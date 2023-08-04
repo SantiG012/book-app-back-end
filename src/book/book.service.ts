@@ -102,4 +102,25 @@ export class BookService implements AbstracBookService {
             throw createError(error.code || 'UNKNOWN_ERROR',"book's cover url");
         }
     }
+
+    async deleteBook(bookId:string): Promise<BookIdDto> {
+        try{
+            const bookIdDto:BookIdDto = await this.prisma.book.update({
+                where:{
+                    bookId
+                },
+                data:{
+                    bookStatus:'inactive'
+                },
+                select:{
+                    bookId:true
+                }
+            })
+
+            return bookIdDto
+
+        }catch(error){
+            throw createError(error.code || 'UNKNOWN_ERROR',"book's cover url");
+        }
+    }
 }

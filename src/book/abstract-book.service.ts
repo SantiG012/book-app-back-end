@@ -8,4 +8,5 @@ export abstract class AbstracBookService{
     abstract findBooksById(bookIds:string[]):Promise<BookInfoDto[]>;
     abstract getBookIdsFromCollection(collectionIdDto:string):Promise<string[]>;
     abstract editBookCoverUrl(bookId:string, coverUrl:CoverUrlDto):Promise<BookIdDto>;
+    abstract deleteBook(bookId:string):Promise<BookIdDto>;
 }
