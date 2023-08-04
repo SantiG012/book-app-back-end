@@ -27,4 +27,22 @@ export class AuthorService implements AbstractAuthorService {
             throw createError(error.code || 'UNKNOWN_ERROR', 'Author');
         }
     }
+
+    async deleteAuthor(authorId: string): Promise<AuthorIdDto> {
+        try{
+            const authorIdDto:AuthorIdDto = await this.prisma.author.delete({
+                where: {
+                    authorId
+                },
+                select: {
+                    authorId: true
+                }
+            });
+
+            return authorIdDto;
+
+        }catch(error) {
+            throw createError(error.code || 'UNKNOWN_ERROR', 'Author');
+        }
+    }
 }
