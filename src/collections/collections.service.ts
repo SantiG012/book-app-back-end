@@ -104,4 +104,25 @@ export class CollectionsService implements AbstractCollectionsService {
             throw createError(error.code || 'UNKNOWN_ERROR', "collection's cover url")
         }
     }
+
+    async deleteCollection(collectionId: string): Promise<CollectionIdDto> {
+        try{
+            const collectionIdDto:CollectionIdDto = await this.prismaService.collections.update({
+                where:{
+                    collectionId
+                },
+                data:{
+                    collectionStatus: 'inactive'
+                },
+                select:{
+                    collectionId:true
+                }
+            })
+
+            return collectionIdDto
+            
+        } catch(error){
+            throw createError(error.code || 'UNKNOWN_ERROR', "collection")
+        }
+    }
 }

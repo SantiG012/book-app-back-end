@@ -39,4 +39,9 @@ export class CollectionsController {
     async editCollectionCoverUrl(@Param('collectionId') collectionId:string,@Body() coverUrlDto:CoverUrlDto):Promise<CollectionIdDto> {
         return await this.collectionsService.editCollectionCoverUrl(collectionId, coverUrlDto);
     }
+
+    @Put('deleteCollection/:collectionId')
+    async deleteCollection(@Param('collectionId') collectionId:string):Promise<CollectionIdDto> {
+        return await this.collectionsService.deleteCollection(collectionId);
+    }
 }

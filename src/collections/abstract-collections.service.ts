@@ -7,4 +7,5 @@ export abstract class AbstractCollectionsService {
     abstract getCollections(sub: string): Promise<CollectionInfoDto[]>;
     abstract editCollectionName(collectionId:string, collectionNameDto:CollectionNameDto): Promise <CollectionIdDto>;
     abstract editCollectionCoverUrl(collectionId:string, coverUrl:CoverUrlDto): Promise <CollectionIdDto>;
+    abstract deleteCollection(collectionId:string): Promise<CollectionIdDto>;
 }
