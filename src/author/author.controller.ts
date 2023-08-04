@@ -1,5 +1,5 @@
-import { Body, Controller, Param, Post,Put,UseGuards } from '@nestjs/common';
-import { AuthorIdDto, CreateAuthorDto } from './author-dtos';
+import { Body, Controller, Get, Param, Post,Put,UseGuards } from '@nestjs/common';
+import { AuthorIdDto, AuthorInfoDto, CreateAuthorDto } from './author-dtos';
 import { AbstractAuthorService } from './abstract-author.service';
 import { JwtAuthGuard } from 'src/auth/guards';
 
@@ -18,5 +18,13 @@ export class AuthorController {
     @Put('deleteAuthor/:authorId')
     async deleteAuthor(@Param('authorId') authorId: string):Promise<AuthorIdDto> {
         return await this.authorService.deleteAuthor(authorId);
+    }
+
+    @Get('getAuthorsByBookId/:bookId')
+    async getAuthorsByBookId(@Param('bookId') bookId: string): Promise<AuthorInfoDto[]> {
+        const authorsId:string[] = await this.authorService.getAuthorsIdByBookId(bookId);
+        const authors:AuthorInfoDto[] = await this.authorService.getAuthorsById(authorsId);
+
+        return authors;
     }
 }

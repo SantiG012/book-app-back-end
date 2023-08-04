@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AbstractAuthorService } from './abstract-author.service';
-import { CreateAuthorDto, AuthorIdDto } from './author-dtos';
+import { CreateAuthorDto, AuthorIdDto, AuthorInfoDto } from './author-dtos';
 import { AbstractPrismaService } from '../prisma/abstract-prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { createError } from '../data-base-common-exceptions/exceptions-messages';
@@ -42,6 +42,44 @@ export class AuthorService implements AbstractAuthorService {
             return authorIdDto;
 
         }catch(error) {
+            throw createError(error.code || 'UNKNOWN_ERROR', 'Author');
+        }
+    }
+
+    async getAuthorsIdByBookId(bookId: string): Promise<string[]> {
+        try{
+            const authorsIdDto:AuthorIdDto[] = await this.prisma.book_author.findMany({
+                where: {
+                    bookId,
+                    bookAuthorStatus: 'active'
+                },
+                select: {
+                    authorId: true
+                }
+            });
+
+            const authorsId:string[] = authorsIdDto.map(authorIdDto => authorIdDto.authorId);
+
+            return authorsId;
+
+        }catch(error){
+            throw createError(error.code || 'UNKNOWN_ERROR', 'Author');
+        }
+    }
+
+    async getAuthorsById(authorsId: string[]): Promise<AuthorInfoDto[]> {
+        try{
+            const authors:AuthorInfoDto[] = await this.prisma.author.findMany({
+                where: {
+                    authorId: {
+                        in: authorsId
+                    },
+                    authorStatus: 'active'
+                }
+            });
+
+            return authors;
+        }catch(error){
             throw createError(error.code || 'UNKNOWN_ERROR', 'Author');
         }
     }
